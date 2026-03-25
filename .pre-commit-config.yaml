@@ -1,0 +1,40 @@
+# .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/pinterest/ktlint
+    rev: v0.50.0
+    hooks:
+      - id: ktlint
+        additional_dependencies: []
+        files: \.kt$  # Only Kotlin files
+        entry: ./gradlew ktlintFormat
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+
+  - repo: https://github.com/detekt/detekt
+    rev: v2.6.0
+    hooks:
+      - id: detekt
+        files: \.kt$
+        entry: ./gradlew detekt
+
+  - repo: local
+    hooks:
+      - id: check-log-files
+        name: Prevent committing log files
+        entry: bash scripts/check_logs.sh
+        language: script
+        types: [file]
+
+  - repo: local
+    hooks:
+      - id: dco-signoff
+        name: Enforce DCO sign-off
+        entry: bash scripts/dco_signoff.sh
+        language: script
+        types: [file]

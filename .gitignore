@@ -1,0 +1,32 @@
+# === Android / Gradle ===
+.gradle/
+build/
+*/build/
+
+# Local configuration files (SDK, IDE, etc)
+local.properties
+*.iml
+
+# IntelliJ / VS Code / Antigravity / IDE caches
+.idea/
+.vscode/
+*.ipr
+*.iws
+out/
+
+# Android Studio generated files
+captures/
+externalNativeBuild/
+
+# Kotlin / Compose / Jetpack caches
+*.kotlin_module
+*.class
+
+# Log / temp files
+*.log
+LOG.md
+GEMINI.md
+
+# Misc / OS files
+.DS_Store
+Thumbs.db
