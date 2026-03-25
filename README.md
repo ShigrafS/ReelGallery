@@ -100,6 +100,7 @@ The app reads local media files and requests runtime permissions:
   - `targetSdk = 34`
 
 > Note: This repository currently does **not** include a `gradlew` wrapper script.
+> Use a local Gradle installation (**Gradle 8.2 or higher** recommended for this project setup) or run from Android Studio.
 
 ---
 
@@ -153,7 +154,7 @@ pre-commit run --all-files
 ## 🎯 Design Notes
 
 - **Performance-minded image loading**: custom Coil memory/disk cache tuning in `ReelGalleryApp`
-- **Simple in-memory media cache** in `MediaRepositoryImpl` to reduce repeated `MediaStore` queries
+- **Simple in-memory media cache** in `data/MediaRepository.kt` to reduce repeated `MediaStore` queries
 - **Player lifecycle control** centralized in `PlayerManager`
 
 ---
