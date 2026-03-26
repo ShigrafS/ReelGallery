@@ -31,5 +31,5 @@ jobs:
       shell: bash
 
     - name: Run Unit Tests
-      run: ./gradlew testDebugUnitTest --continue
+      run: ./gradlew testDebugUnitTest
       shell: bash
