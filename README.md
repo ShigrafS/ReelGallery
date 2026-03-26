@@ -1,209 +1,101 @@
 # 🎞️ ReelGallery
 
-
 <div align="center">
 
+A premium, lightweight Android gallery built with **Jetpack Compose** for browsing folders, viewing media in grids, and watching videos in a modern, vertical reel-style viewer.
 
-A lightweight, modern Android gallery app built with **Jetpack Compose** for browsing folders, viewing media in grids, and watching videos in a reel-style full-screen viewer.
+[![Android CI](https://github.com/ShigrafS/ReelGallery/actions/workflows/ci.yml/badge.svg)](https://github.com/ShigrafS/ReelGallery/actions/workflows/ci.yml)
+![Platform](https://img.shields.io/badge/platform-Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+![Language](https://img.shields.io/badge/language-Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
+![UI](https://img.shields.io/badge/UI-Jetpack%20Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)
+![Media](https://img.shields.io/badge/player-Media3%20ExoPlayer-FF6F00?style=for-the-badge)
 
+---
 
-![Platform](https://img.shields.io/badge/platform-Android-3DDC84?logo=android&logoColor=white)
-![Language](https://img.shields.io/badge/language-Kotlin-7F52FF?logo=kotlin&logoColor=white)
-![UI](https://img.shields.io/badge/UI-Jetpack%20Compose-4285F4?logo=jetpackcompose&logoColor=white)
-![Media](https://img.shields.io/badge/player-Media3%20ExoPlayer-FF6F00)
-
+![ReelGallery Mockup](file:///C:/Users/user/.gemini/antigravity/brain/b1603f45-2527-4ff4-8a35-1713fd3c42d4/reelgallery_mockup_v1_1774542860580.png)
 
 </div>
 
+## ✨ Key Features
 
----
+- 📁 **Folder-Centric Browsing**: Seamlessly navigate local media folders via `MediaStore`.
+- 🧩 **Optimized Media Grids**: Fast, 3-column views with intelligent image caching.
+- 📱 **Premium Reel Viewer**: Full-screen, vertical paging experience with glassmorphism overlays.
+- ▶️ **Auto-Looping Video**: Smooth playback powered by **AndroidX Media3**.
+- ⚡ **Performance Optimized**: Low-RAM footprint, targeting Android 13+ (API 33).
+- 🔐 **Privacy First**: Fully offline, on-device media handling.
 
-
-## ✨ Features
-
-
-- 📁 **Folder-first browsing** of local media from `MediaStore`
-- 🧩 **3-column media grid** per folder
-- 📱 **Full-screen reel viewer** with vertical paging
-- ▶️ **Video autoplay + loop** via Media3/ExoPlayer
-- 🖼️ **Fast image loading** with Coil
-- ⚡ **Lightweight MVP architecture** with manual DI and simple navigation state
-
-
----
-
-
-## 🧱 Tech Stack
-
+## 🧱 Modern Tech Stack
 
 | Area | Technology |
 |---|---|
-| Language | Kotlin |
-| UI | Jetpack Compose + Material 3 |
-| Architecture | MVVM-inspired layers (data/domain/ui/viewmodel) |
-| Media playback | AndroidX Media3 ExoPlayer |
-| Image loading | Coil (Compose) |
-| Build system | Gradle (Kotlin DSL) |
-| Static checks | ktlint + detekt (via pre-commit hooks) |
-
-
----
-
+| **Language** | Kotlin (Coroutines + Flow) |
+| **UI Framework** | Jetpack Compose + Material 3 |
+| **Media Engine** | AndroidX Media3 (ExoPlayer) |
+| **Image Loading** | Coil (Compose-optimized) |
+| **Architecture** | MVVM-inspired layers (Data, Domain, UI) |
+| **Build System** | Gradle (Kotlin DSL) with **Gradle Wrapper** |
+| **Static Analysis** | Detekt + Ktlint + Android Lint |
 
 ## 🏗️ Project Structure
 
-
 ```text
 app/src/main/java/com/reelgallery
-├── data
-│   ├── MediaRepository.kt
-│   └── MediaStoreDataSource.kt
-├── domain
-│   ├── MediaFolder.kt
-│   └── MediaItem.kt
-├── player
-│   └── PlayerManager.kt
-├── ui
-│   ├── navigation/AppNavigation.kt
-│   ├── screens
-│   │   ├── FolderScreen.kt
-│   │   ├── GridScreen.kt
-│   │   └── ReelViewerScreen.kt
-│   └── theme/Theme.kt
-├── viewmodel
-│   ├── FolderViewModel.kt
-│   ├── GridViewModel.kt
-│   └── ReelViewModel.kt
-├── AppContainer.kt
-├── MainActivity.kt
-└── ReelGalleryApp.kt
+├── data/          # Repository and MediaStore integration
+├── domain/        # Business logic and entity models
+├── player/        # Centralized Media3 player lifecycle control
+├── ui/           
+│   ├── navigation/ # State-based navigation handling
+│   ├── screens/    # Jetpack Compose UI screens (Folder, Grid, Reel)
+│   └── theme/      # Material 3 Design System
+├── viewmodel/     # State holders and logic separation
+└── MainActivity.kt
 ```
 
+## 🚀 Getting Started
 
----
+### Prerequisites
+- **Android Studio** (Hedgehog or higher)
+- **JDK 17+**
+- Android SDK (Target: API 34, Min: API 26)
 
-
-## 🧭 App Flow
-
-
-1. **Folders screen** → lists media folders
-2. **Grid screen** → shows folder contents in a 3-column layout
-3. **Reels screen** → opens selected item in a vertical full-screen viewer
-
-
-Back navigation is handled with a simple sealed-screen state in `MainActivity`.
-
-
----
-
-
-## 🔐 Permissions
-
-
-The app reads local media files and requests runtime permissions:
-
-
-- Android 13+ (`API 33+`):
-  - `READ_MEDIA_IMAGES`
-  - `READ_MEDIA_VIDEO`
-- Android 12 and below:
-  - `READ_EXTERNAL_STORAGE`
-
-
----
-
-
-## 📋 Requirements
-
-
-- **Android Studio** (latest stable recommended)
-- **JDK 17**
-- Android SDK configured with:
-  - `compileSdk = 34`
-  - `minSdk = 26`
-  - `targetSdk = 34`
-
-
-> Note: This repository currently does **not** include a `gradlew` wrapper script.
-> Use a local Gradle installation (**Gradle 8.2 or higher** recommended for this project setup) or run from Android Studio.
-
----
-
-
-## 🚀 Build & Run
-
-
-From the repository root:
-
+### Build Locally
+The repository includes the **Gradle Wrapper**, so no local installation of Gradle is required:
 
 ```bash
-gradle assembleDebug
+# Clone the repository
+git clone https://github.com/ShigrafS/ReelGallery.git
+
+# Navigate to the project directory
+cd ReelGallery
+
+# Build the Debug APK
+./gradlew assembleDebug
+
+# Run unit tests
+./gradlew test
 ```
 
+## ⚙️ CI/CD Pipeline
+The project uses **GitHub Actions** for robust multi-platform quality assurance. Every commit and pull request triggers a build matrix across:
+- 🐧 **Ubuntu**
+- 🍎 **macOS**
+- 🪟 **Windows**
 
-or open the project in Android Studio and run the `app` configuration on an emulator/device.
+### Automated Quality Checks
+- ✅ **Build Verification**: Ensures the app compiles on all platforms.
+- 🛠️ **Artifact Upload**: Automatically uploads the `app-debug.apk` for testing.
+- 🧪 **Unit Testing**: Runs the complete JUnit test suite.
+- 🔍 **Static Analysis**: Enforces standards via **Detekt**, **Ktlint**, and **Android Lint**.
 
+## 🤝 Contribution Guidelines
 
-### Common Commands
-
-
-```bash
-gradle assemble          # Assemble variants
-gradle build             # Full project build
-gradle test              # Unit tests (if present)
-gradle connectedAndroidTest  # Instrumented tests (requires device/emulator)
-```
-
+This project maintains high standards for code quality and documentation:
+1. **DCO Sign-off**: All commits must be signed off (`git commit -s`).
+2. **Conventional Commits**: Use the Angular/Conventional Commit style (`feat:`, `fix:`, `refactor:`, etc.).
+3. **Pre-commit Hooks**: Ensure local checks pass before pushing (`pre-commit install`).
 
 ---
-
-
-## ✅ Pre-commit & Quality Checks
-
-
-Configured in `.pre-commit-config.yaml`:
-
-
-- `ktlint` formatting/check
-- `detekt` static analysis
-- trailing whitespace / EOF fixers
-- YAML checks
-- local hooks:
-  - block `.log` / `LOG.md` file commits
-  - DCO sign-off reminder
-
-
-Install hooks locally:
-
-
-```bash
-pre-commit install
-```
-
-
-Run all hooks manually:
-
-
-```bash
-pre-commit run --all-files
-```
-
-
----
-
-
-## 🎯 Design Notes
-
-
-- **Performance-minded image loading**: custom Coil memory/disk cache tuning in `ReelGalleryApp`
-- **Simple in-memory media cache** in `data/MediaRepository.kt` to reduce repeated `MediaStore` queries
-- **Player lifecycle control** centralized in `PlayerManager`
-
-
----
-
 
 ## 📄 License
-
-
-No license file is currently included in this repository.
+This project is currently distributed without a formal license. See `LICENSE` for future updates.
