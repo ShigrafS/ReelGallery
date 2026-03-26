@@ -34,7 +34,7 @@ jobs:
     - name: Upload Debug APK
       uses: actions/upload-artifact@v4
       with:
-        name: app-debug
+        name: app-debug-${{ github.run_number }}
         path: app/build/outputs/apk/debug/app-debug.apk
 
     - name: Run Unit Tests
@@ -52,4 +52,13 @@ jobs:
     - name: Run Ktlint Check
       run: ./gradlew ktlintCheck
       shell: bash
-      
+
+    - name: Cache Gradle Build Outputs
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: gradle-${{ runner.os }}-
+        
