@@ -37,30 +37,74 @@ A premium, lightweight Android gallery built with **Jetpack Compose** for browsi
 | **Build System** | Gradle (Kotlin DSL) with **Gradle Wrapper** |
 | **Static Analysis** | Detekt + Ktlint + Android Lint |
 
+---
+
 ## 🏗️ Project Structure
 
 ```text
 app/src/main/java/com/reelgallery
-├── data/          # Repository and MediaStore integration
-├── domain/        # Business logic and entity models
-├── player/        # Centralized Media3 player lifecycle control
-├── ui/           
-│   ├── navigation/ # State-based navigation handling
-│   ├── screens/    # Jetpack Compose UI screens (Folder, Grid, Reel)
-│   └── theme/      # Material 3 Design System
-├── viewmodel/     # State holders and logic separation
-└── MainActivity.kt
+├── data
+│   ├── MediaRepository.kt
+│   └── MediaStoreDataSource.kt
+├── domain
+│   ├── MediaFolder.kt
+│   └── MediaItem.kt
+├── player
+│   └── PlayerManager.kt
+├── ui
+│   ├── navigation/AppNavigation.kt
+│   ├── screens
+│   │   ├── FolderScreen.kt
+│   │   ├── GridScreen.kt
+│   │   └── ReelViewerScreen.kt
+│   └── theme/Theme.kt
+├── viewmodel
+│   ├── FolderViewModel.kt
+│   ├── GridViewModel.kt
+│   └── ReelViewModel.kt
+├── AppContainer.kt
+├── MainActivity.kt
+└── ReelGalleryApp.kt
 ```
 
-## 🚀 Getting Started
+---
 
-### Prerequisites
-- **Android Studio** (Hedgehog or higher)
-- **JDK 17+**
-- Android SDK (Target: API 34, Min: API 26)
+## 🧭 App Flow
 
-### Build Locally
-The repository includes the **Gradle Wrapper**, so no local installation of Gradle is required:
+1. **Folders screen** → lists media folders
+2. **Grid screen** → shows folder contents in a 3-column layout
+3. **Reels screen** → opens selected item in a vertical full-screen viewer
+
+Back navigation is handled with a simple sealed-screen state in `MainActivity`.
+
+---
+
+## 🔐 Permissions
+
+The app reads local media files and requests runtime permissions:
+
+- **Android 13+ (API 33+):**
+  - `READ_MEDIA_IMAGES`
+  - `READ_MEDIA_VIDEO`
+- **Android 12 and below:**
+  - `READ_EXTERNAL_STORAGE`
+
+---
+
+## 📋 Requirements
+
+- **Android Studio** (Hedgehog or higher recommended)
+- **JDK 17**
+- **Android SDK Configuration:**
+  - `compileSdk = 34`
+  - `minSdk = 26`
+  - `targetSdk = 34`
+
+---
+
+## 🚀 Build & Run
+
+From the repository root using the **Gradle Wrapper** (no local install required):
 
 ```bash
 # Clone the repository
@@ -87,6 +131,8 @@ The project uses **GitHub Actions** for robust multi-platform quality assurance.
 - 🛠️ **Artifact Upload**: Automatically uploads the `app-debug.apk` for testing.
 - 🧪 **Unit Testing**: Runs the complete JUnit test suite.
 - 🔍 **Static Analysis**: Enforces standards via **Detekt**, **Ktlint**, and **Android Lint**.
+
+---
 
 ## 🤝 Contribution Guidelines
 
