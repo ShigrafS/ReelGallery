@@ -1,7 +1,6 @@
 package com.reelgallery.ui.screens
 
 import android.content.Context
-import androidx.annotation.OptIn
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.*
