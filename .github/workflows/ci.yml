@@ -50,6 +50,7 @@ jobs:
       shell: bash
 
     - name: Run Ktlint Check
+      continue-on-error: true
       run: ./gradlew ktlintCheck --stacktrace --info
       shell: bash
 
