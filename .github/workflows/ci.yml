@@ -28,7 +28,7 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build Debug APK
-      run: ./gradlew assembleDebug
+      run: ./gradlew assembleDebug --stacktrace --info
       shell: bash
 
     - name: Upload Debug APK
@@ -38,19 +38,19 @@ jobs:
         path: app/build/outputs/apk/debug/app-debug.apk
 
     - name: Run Unit Tests
-      run: ./gradlew testDebugUnitTest
+      run: ./gradlew testDebugUnitTest --stacktrace --info
       shell: bash
 
     - name: Run Android Lint
-      run: ./gradlew lintDebug
+      run: ./gradlew lintDebug --stacktrace --info
       shell: bash
 
     - name: Run Detekt Static Analysis
-      run: ./gradlew detekt
+      run: ./gradlew detekt --stacktrace --info
       shell: bash
 
     - name: Run Ktlint Check
-      run: ./gradlew ktlintCheck
+      run: ./gradlew ktlintCheck --stacktrace --info
       shell: bash
 
     - name: Cache Gradle Build Outputs
