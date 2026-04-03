@@ -23,7 +23,8 @@ import com.reelgallery.viewmodel.ReelViewModel
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 
-@OptIn(UnstableApi::class, ExperimentalFoundationApi::class)
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ReelViewerScreen(
     viewModel: ReelViewModel,
