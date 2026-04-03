@@ -68,10 +68,10 @@ dependencies {
     val media3Version = "1.2.1"
     implementation("androidx.media3:media3-exoplayer:$media3Version")
     implementation("androidx.media3:media3-ui:$media3Version")
-    
+
     // Coil (Image Loading)
     implementation("io.coil-kt:coil-compose:2.6.0")
-    
+
     // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
