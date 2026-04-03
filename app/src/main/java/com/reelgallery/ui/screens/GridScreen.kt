@@ -13,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.reelgallery.domain.MediaType
@@ -23,7 +22,7 @@ import com.reelgallery.viewmodel.GridViewModel
 fun GridScreen(
     viewModel: GridViewModel,
     onNavigateUp: () -> Unit,
-    onMediaClick: (index: Int) -> Unit
+    onMediaClick: (index: Int) -> Unit,
 ) {
     val state by viewModel.uiState.collectAsState()
 
@@ -43,36 +42,38 @@ fun GridScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(2.dp),
                 horizontalArrangement = Arrangement.spacedBy(2.dp),
-                verticalArrangement = Arrangement.spacedBy(2.dp)
+                verticalArrangement = Arrangement.spacedBy(2.dp),
             ) {
                 itemsIndexed(state.media, key = { _, item -> item.id }) { index, item ->
                     Box(
-                        modifier = Modifier
-                            .aspectRatio(1f)
-                            .clickable { onMediaClick(index) }
+                        modifier =
+                            Modifier
+                                .aspectRatio(1f)
+                                .clickable { onMediaClick(index) },
                     ) {
                         AsyncImage(
                             model = item.uri,
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier.fillMaxSize(),
                         )
-                        
+
                         // Video indicator overlay
                         if (item.type == MediaType.VIDEO) {
                             Surface(
                                 color = Color.Black.copy(alpha = 0.6f),
-                                modifier = Modifier
-                                    .align(Alignment.BottomEnd)
-                                    .padding(4.dp),
-                                shape = MaterialTheme.shapes.small
+                                modifier =
+                                    Modifier
+                                        .align(Alignment.BottomEnd)
+                                        .padding(4.dp),
+                                shape = MaterialTheme.shapes.small,
                             ) {
                                 // Simple duration display or icon (omitting formatted string helper for brevity)
                                 Text(
                                     text = "Video",
                                     color = Color.White,
                                     style = MaterialTheme.typography.labelSmall,
-                                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
+                                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp),
                                 )
                             }
                         }

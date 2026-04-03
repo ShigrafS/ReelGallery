@@ -12,11 +12,10 @@ import kotlinx.coroutines.launch
 
 data class FolderUiState(
     val isLoading: Boolean = true,
-    val folders: List<MediaFolder> = emptyList()
+    val folders: List<MediaFolder> = emptyList(),
 )
 
 class FolderViewModel(private val repository: MediaRepository) : ViewModel() {
-
     private val _uiState = MutableStateFlow(FolderUiState())
     val uiState: StateFlow<FolderUiState> = _uiState.asStateFlow()
 

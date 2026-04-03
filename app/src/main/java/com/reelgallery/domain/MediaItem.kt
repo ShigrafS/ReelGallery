@@ -3,7 +3,8 @@ package com.reelgallery.domain
 import android.net.Uri
 
 enum class MediaType {
-    IMAGE, VIDEO
+    IMAGE,
+    VIDEO,
 }
 
 data class MediaItem(
@@ -13,5 +14,5 @@ data class MediaItem(
     val duration: Long?, // Null for images
     val folderId: Long,
     val folderName: String,
-    val dateAdded: Long
+    val dateAdded: Long,
 )

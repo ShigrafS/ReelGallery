@@ -1,6 +1,5 @@
 package com.reelgallery.ui.screens
 
-import android.content.Context
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.*
@@ -12,7 +11,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.ui.PlayerView
@@ -29,14 +27,14 @@ import kotlinx.coroutines.flow.filterNotNull
 fun ReelViewerScreen(
     viewModel: ReelViewModel,
     playerManager: PlayerManager,
-    onNavigateUp: () -> Unit
+    onNavigateUp: () -> Unit,
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
-    
+
     // Snapping list state
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = state.currentIndex)
-    
+
     // observe exactly one visible item
     LaunchedEffect(listState) {
         snapshotFlow { listState.layoutInfo.visibleItemsInfo.firstOrNull()?.index }
@@ -46,7 +44,7 @@ fun ReelViewerScreen(
                 viewModel.onVisibleItemChanged(index)
             }
     }
-    
+
     // handle exoPlayer playback bound to current visible item
     LaunchedEffect(state.currentIndex, state.media) {
         if (state.media.isNotEmpty() && state.currentIndex in state.media.indices) {
@@ -59,7 +57,7 @@ fun ReelViewerScreen(
             }
         }
     }
-    
+
     // Cleanup player when we leave screen
     DisposableEffect(Unit) {
         onDispose {
@@ -69,18 +67,19 @@ fun ReelViewerScreen(
     }
 
     if (state.media.isEmpty()) {
-       // fallback
-       Text("No Media")
+        // fallback
+        Text("No Media")
     } else {
         LazyColumn(
             state = listState,
             flingBehavior = rememberSnapFlingBehavior(lazyListState = listState),
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             itemsIndexed(state.media, key = { _, item -> item.id }) { index, item ->
                 Box(
-                    modifier = Modifier
-                        .fillParentMaxSize() // Force 100% height and width
+                    modifier =
+                        Modifier
+                            .fillParentMaxSize(), // Force 100% height and width
                 ) {
                     if (item.type == MediaType.VIDEO) {
                         // Only attach player to the active view loosely
@@ -99,7 +98,7 @@ fun ReelViewerScreen(
                                         view.player = playerManager.exoPlayer
                                     }
                                 },
-                                modifier = Modifier.fillMaxSize()
+                                modifier = Modifier.fillMaxSize(),
                             )
                         } else {
                             // Video placeholder/thumbnail when scrolled away
@@ -107,7 +106,7 @@ fun ReelViewerScreen(
                                 model = item.uri,
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop,
-                                modifier = Modifier.fillMaxSize()
+                                modifier = Modifier.fillMaxSize(),
                             )
                         }
                     } else {
@@ -116,7 +115,7 @@ fun ReelViewerScreen(
                             model = item.uri,
                             contentDescription = null,
                             contentScale = ContentScale.Fit,
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier.fillMaxSize(),
                         )
                     }
                 }

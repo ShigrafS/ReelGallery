@@ -12,15 +12,16 @@ import androidx.media3.exoplayer.ExoPlayer
 class PlayerManager {
     var exoPlayer: ExoPlayer? = null
         private set
-        
+
     private var currentUri: Uri? = null
 
     fun initialize(context: Context) {
         if (exoPlayer == null) {
-            exoPlayer = ExoPlayer.Builder(context).build().apply {
-                repeatMode = Player.REPEAT_MODE_ONE
-                playWhenReady = true // auto-play
-            }
+            exoPlayer =
+                ExoPlayer.Builder(context).build().apply {
+                    repeatMode = Player.REPEAT_MODE_ONE
+                    playWhenReady = true // auto-play
+                }
         }
     }
 
@@ -30,7 +31,7 @@ class PlayerManager {
             exoPlayer?.play()
             return
         }
-        
+
         currentUri = uri
         exoPlayer?.apply {
             setMediaItem(MediaItem.fromUri(uri))

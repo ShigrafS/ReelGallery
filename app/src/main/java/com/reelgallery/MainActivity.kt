@@ -28,41 +28,41 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
 class MainActivity : ComponentActivity() {
-
     private lateinit var appContainer: AppContainer
-    
+
     // simplistic nav state
     private var currentScreen by mutableStateOf<Screen>(Screen.Folders)
 
-    private val permissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        val granted = permissions.entries.all { it.value }
-        if (granted) {
-            currentScreen = Screen.Folders
-        } else {
-            Toast.makeText(this, "Permissions required to view gallery", Toast.LENGTH_LONG).show()
+    private val permissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions(),
+        ) { permissions ->
+            val granted = permissions.entries.all { it.value }
+            if (granted) {
+                currentScreen = Screen.Folders
+            } else {
+                Toast.makeText(this, "Permissions required to view gallery", Toast.LENGTH_LONG).show()
+            }
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         appContainer = AppContainer(this)
-        
+
         requestPermissions()
 
         setContent {
             ReelGalleryTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
                     AppNavigation()
                 }
             }
         }
     }
-    
+
     override fun onDestroy() {
         super.onDestroy()
         appContainer.playerManager.release()
@@ -73,12 +73,12 @@ class MainActivity : ComponentActivity() {
             permissionLauncher.launch(
                 arrayOf(
                     Manifest.permission.READ_MEDIA_IMAGES,
-                    Manifest.permission.READ_MEDIA_VIDEO
-                )
+                    Manifest.permission.READ_MEDIA_VIDEO,
+                ),
             )
         } else {
             permissionLauncher.launch(
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
             )
         }
     }
@@ -91,7 +91,7 @@ class MainActivity : ComponentActivity() {
                 val viewModel: FolderViewModel = viewModel(factory = factory)
                 FolderScreen(
                     viewModel = viewModel,
-                    onFolderClick = { folderId -> currentScreen = Screen.Grid(folderId) }
+                    onFolderClick = { folderId -> currentScreen = Screen.Grid(folderId) },
                 )
             }
             is Screen.Grid -> {
@@ -100,25 +100,26 @@ class MainActivity : ComponentActivity() {
                 GridScreen(
                     viewModel = viewModel,
                     onNavigateUp = { currentScreen = Screen.Folders },
-                    onMediaClick = { index -> 
-                        currentScreen = Screen.Reels(screen.folderId, index) 
-                    }
+                    onMediaClick = { index ->
+                        currentScreen = Screen.Reels(screen.folderId, index)
+                    },
                 )
             }
             is Screen.Reels -> {
-                val factory = remember(screen.folderId, screen.startIndex) {
-                    ReelViewModel.Factory(appContainer.mediaRepository, screen.folderId, screen.startIndex)
-                }
+                val factory =
+                    remember(screen.folderId, screen.startIndex) {
+                        ReelViewModel.Factory(appContainer.mediaRepository, screen.folderId, screen.startIndex)
+                    }
                 val viewModel: ReelViewModel = viewModel(factory = factory)
                 ReelViewerScreen(
                     viewModel = viewModel,
                     playerManager = appContainer.playerManager,
-                    onNavigateUp = { currentScreen = Screen.Grid(screen.folderId) }
+                    onNavigateUp = { currentScreen = Screen.Grid(screen.folderId) },
                 )
             }
         }
     }
-    
+
     // Handle back button for our simple manual navigation
     override fun onBackPressed() {
         when (val screen = currentScreen) {

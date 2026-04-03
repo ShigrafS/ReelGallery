@@ -13,14 +13,13 @@ import kotlinx.coroutines.launch
 data class GridUiState(
     val isLoading: Boolean = true,
     val media: List<MediaItem> = emptyList(),
-    val scrollToIndex: Int = 0
+    val scrollToIndex: Int = 0,
 )
 
 class GridViewModel(
     private val repository: MediaRepository,
-    private val folderId: Long
+    private val folderId: Long,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(GridUiState())
     val uiState: StateFlow<GridUiState> = _uiState.asStateFlow()
 
@@ -38,7 +37,7 @@ class GridViewModel(
 
     class Factory(
         private val repository: MediaRepository,
-        private val folderId: Long
+        private val folderId: Long,
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

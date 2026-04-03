@@ -12,15 +12,14 @@ import kotlinx.coroutines.launch
 
 data class ReelUiState(
     val media: List<MediaItem> = emptyList(),
-    val currentIndex: Int = 0
+    val currentIndex: Int = 0,
 )
 
 class ReelViewModel(
     private val repository: MediaRepository,
     private val folderId: Long,
-    startIndex: Int
+    startIndex: Int,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(ReelUiState(currentIndex = startIndex))
     val uiState: StateFlow<ReelUiState> = _uiState.asStateFlow()
 
@@ -40,7 +39,7 @@ class ReelViewModel(
     class Factory(
         private val repository: MediaRepository,
         private val folderId: Long,
-        private val startIndex: Int
+        private val startIndex: Int,
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

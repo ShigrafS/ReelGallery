@@ -13,7 +13,7 @@ class AppContainer(private val context: Context) {
     val mediaRepository: MediaRepository by lazy {
         MediaRepositoryImpl(MediaStoreDataSource(context.applicationContext))
     }
-    
+
     val playerManager: PlayerManager by lazy {
         PlayerManager() // initialized when needed in Compose explicitly
     }

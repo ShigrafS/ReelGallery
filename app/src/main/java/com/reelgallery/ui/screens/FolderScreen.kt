@@ -22,7 +22,7 @@ import com.reelgallery.viewmodel.FolderViewModel
 @Composable
 fun FolderScreen(
     viewModel: FolderViewModel,
-    onFolderClick: (Long) -> Unit
+    onFolderClick: (Long) -> Unit,
 ) {
     val state by viewModel.uiState.collectAsState()
 
@@ -38,12 +38,12 @@ fun FolderScreen(
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             items(state.folders, key = { it.id }) { folder ->
                 FolderItem(
                     folder = folder,
-                    onClick = { onFolderClick(folder.id) }
+                    onClick = { onFolderClick(folder.id) },
                 )
             }
         }
@@ -53,37 +53,39 @@ fun FolderScreen(
 @Composable
 fun FolderItem(
     folder: MediaFolder,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(8.dp),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+                .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         // Thumbnail with Coil
         AsyncImage(
             model = folder.thumbnailUri,
             contentDescription = folder.name,
             contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(80.dp)
-                .clip(RoundedCornerShape(8.dp))
+            modifier =
+                Modifier
+                    .size(80.dp)
+                    .clip(RoundedCornerShape(8.dp)),
         )
-        
+
         Spacer(modifier = Modifier.width(16.dp))
-        
+
         Column {
             Text(
                 text = folder.name,
                 style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = "\${folder.itemCount} items",
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium,
             )
         }
     }
