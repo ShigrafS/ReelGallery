@@ -4,4 +4,5 @@ val media3Version = "1.2.0" // <-- latest stable Media3 version
 plugins {
     id("com.android.application") version "8.2.0" apply false
     id("org.jetbrains.kotlin.android") version "1.9.10" apply false
+    id("io.gitlab.arturbosch.detekt") version "1.23.5"
 }
