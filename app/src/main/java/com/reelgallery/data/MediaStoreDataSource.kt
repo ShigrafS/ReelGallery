@@ -2,6 +2,7 @@ package com.reelgallery.data
 
 import android.content.ContentUris
 import android.content.Context
+import android.os.Bundle
 import android.provider.MediaStore
 import com.reelgallery.domain.MediaItem
 import com.reelgallery.domain.MediaType
@@ -32,17 +33,26 @@ class MediaStoreDataSource(private val context: Context) {
                     MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO.toString(),
                 )
 
-            // sort by newest
-            val sortOrder = "\${MediaStore.Files.FileColumns.DATE_ADDED} DESC"
-
             val queryUri = MediaStore.Files.getContentUri("external")
+
+            val queryArgs = Bundle().apply {
+                putString(android.content.ContentResolver.QUERY_ARG_SQL_SELECTION, selection)
+                putStringArray(android.content.ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, selectionArgs)
+                putStringArray(
+                    android.content.ContentResolver.QUERY_ARG_SORT_COLUMNS,
+                    arrayOf(MediaStore.Files.FileColumns.DATE_ADDED)
+                )
+                putInt(
+                    android.content.ContentResolver.QUERY_ARG_SORT_DIRECTION,
+                    android.content.ContentResolver.QUERY_SORT_DIRECTION_DESCENDING
+                )
+            }
 
             context.contentResolver.query(
                 queryUri,
                 projection,
-                selection,
-                selectionArgs,
-                sortOrder,
+                queryArgs,
+                null,
             )?.use { cursor ->
                 val idCol = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)
                 val typeCol = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.MEDIA_TYPE)

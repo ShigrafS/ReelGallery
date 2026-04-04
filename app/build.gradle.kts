@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.reelgallery"
-        minSdk = 26 // Android 8.0, but target is 13+ as per PRD
+        minSdk = 30 // Android 11
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
